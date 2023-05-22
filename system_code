@@ -1,0 +1,53 @@
+class Vehicle:
+    def __init__(self, name, mileage_limit):
+        self.name = name
+        self.mileage_limit = mileage_limit
+        self.mileage = 0
+        self.service_count = 0
+        self.error_count = 0
+        self.repair_history = []
+        self.total_repair_cost = 0
+
+    def run(self, distance):
+        self.mileage += distance
+        if self.mileage >= self.mileage_limit:
+            self.service_count += 1
+            self.mileage = 0
+            print(f"{self.name} has been serviced.")
+    
+    def add_error(self, error_description):
+        self.error_count += 1
+        self.repair_history.append(error_description)
+
+    def add_repair_cost(self, cost):
+        self.total_repair_cost += cost
+
+    def get_monthly_report(self):
+        report = f"{self.name}: \n"
+        report += f"Total mileage: {self.mileage}\n"
+        report += f"Service count: {self.service_count}\n"
+        report += f"Error count: {self.error_count}\n"
+        report += f"Total repair cost: {self.total_repair_cost}\n"
+        return report
+ 
+class Bus(Vehicle):
+    def __init__(self, name):
+        super().__init__(name, 5000)
+
+class Lorry(Vehicle):
+    def __init__(self, name):
+        super().__init__(name, 10000)
+
+class FleetManagementSystem:
+    def __init__(self):
+        self.vehicles = []
+        self.best_vehicle = None
+        self.min_error_count = float('inf')
+
+    def add_vehicle(self, vehicle):
+        self.vehicles.append(vehicle)
+
+    def run_fleet(self, distance):
+        for vehicle in self.vehicles:
+            vehicle.run(distance)
+            
