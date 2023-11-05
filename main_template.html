@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Information</title>
+</head>
+<body>
+    <h1>Fleet Information</h1>
+    <p>Total Monthly Spending: KSH {{ total_spending }}</p>
+    <ul>
+        {% for vehicle in fleet.vehicles %}
+            <li>
+                <h2>{{ vehicle.name }}</h2>
+                <p>Driver: {{ vehicle.driver_name }}</p>
+                <p>Total Mileage: {{ vehicle.mileage }}</p>
+                <p>Service Count: {{ vehicle.service_count }}</p>
+                <p>Error Count: {{ vehicle.error_count }}</p>
+                {% if vehicle.error_count > 0 %}
+                    <p>Errors:</p>
+                    <ul>
+                        {% for error in vehicle.repair_history %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <p>Total Repair Cost: KSH {{ vehicle.total_repair_cost }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
